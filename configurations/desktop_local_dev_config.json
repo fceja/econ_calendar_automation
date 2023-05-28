@@ -1,0 +1,22 @@
+{
+    "logLevel": "debug",
+    "remoteServerUrl": "http://localhost:4444/wd/hub",
+    "automationName": "XCUITest",
+    "browserName": "chrome",
+    "browserVersion": "latest",
+    "platformName": "Mac OS X",
+    "pageLoadStrategy": "eager",
+    "webdriverImplicitWait": "5",
+    "testName": "",
+    "maximumWaitTime": "30",
+    "screenResolution": "1920x1200",
+    "serverUrl": "https://www.investing.com",
+    "chromeOptions": {
+        "args": []
+    },
+    "options": {
+        "screenResolution": "1920x1200",
+        "capturePerformance": false,
+        "extendedDebugging": false
+    }
+}

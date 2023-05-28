@@ -1,0 +1,98 @@
+{
+    "banner": {
+        "by": "xpath",
+        "locator": "//div[@id='onetrust-banner-sdk']"
+    },
+    "banner_close_btn": {
+        "by": "xpath",
+        "locator": "//div[@id='onetrust-banner-sdk']//button[contains(@class, 'close-btn-handler')]"
+    },
+    "btn_icon_date_picker": {
+        "by": "xpath",
+        "locator": "//a[@id='datePickerToggleBtn']"
+    },
+    "econ_table": {
+        "by": "xpath",
+        "locator": "//table[@id='economicCalendarData']//tbody"
+    },
+    "econ_table_rows": {
+        "by": "xpath",
+        "locator": "//table[@id='economicCalendarData']//tbody//tr"
+    },
+    "econ_table_row_by_event_id": {
+        "by": "xpath",
+        "locator": "//table[@id='economicCalendarData']//tbody//tr[contains(@id, '{0}')]"
+    },
+    "econ_table_row_date_text_by_event_id": {
+        "by": "xpath",
+        "locator": "//table[@id='economicCalendarData']//tbody//tr[contains(@id, '{0}')]/td[contains(@class, 'first left')]"
+    },
+    "econ_table_row_currency_by_event_id": {
+        "by": "xpath",
+        "locator": "//table[@id='economicCalendarData']//tbody//tr[contains(@id, '{0}')]//td[contains(@class, 'flagCur')]"
+    },
+    "econ_table_row_importance_by_event_id": {
+        "by": "xpath",
+        "locator": "//table[@id='economicCalendarData']//tbody//tr[contains(@id, '{0}')]//td[contains(@class, 'sentiment')]"
+    },
+    "econ_table_row_importance_holiday_by_event_id": {
+        "by": "xpath",
+        "locator": "//table[@id='economicCalendarData']//tbody//tr[contains(@id, '{0}')]//td[contains(@class, 'sentiment')]/span[contains(text(), 'Holiday')]"
+    },
+    "econ_table_row_event_by_event_id": {
+        "by": "xpath",
+        "locator": "//table[@id='economicCalendarData']//tbody//tr[contains(@id, '{0}')]//td[contains(@class, 'left event')]"
+    },
+    "econ_table_row_previous_by_event_id": {
+        "by": "xpath",
+        "locator": "//table[@id='economicCalendarData']//tbody//tr[contains(@id, '{0}')]//td[contains(@id, 'Previous')]"
+    },
+    "econ_table_row_forecast_by_event_id": {
+        "by": "xpath",
+        "locator": "//table[@id='economicCalendarData']//tbody//tr[contains(@id, '{0}')]//td[contains(@id, 'Forecast')]"
+    },
+    "econ_table_row_actual_by_event_id": {
+        "by": "xpath",
+        "locator": "//table[@id='economicCalendarData']//tbody//tr[contains(@id, '{0}')]//td[contains(@id, 'Actual')]"
+    },
+    "row_date": {
+        "by": "xpath",
+        "locator": "(//td[@class='theDay'])[{0}]"
+    },
+    "row_event_time": {
+        "by": "xpath",
+        "locator": "//tr[contains(@data-event-datetime,'{0}')][{1}]//td[contains(@class, 'js-time')]"
+    },
+    "row_event_flag": {
+        "by": "xpath",
+        "locator": "//tr[contains(@data-event-datetime,'{0}')][{1}]//td[contains(@class, 'flag')]"
+    },
+    "row_event_sentiment": {
+        "by": "xpath",
+        "locator": "//tr[contains(@data-event-datetime,'{0}')][{1}]//td[contains(@class, 'sentiment')]/i[contains(@class, 'FullBullish')]"
+    },
+    "row_event_title": {
+        "by": "xpath",
+        "locator": "//tr[contains(@data-event-datetime,'{0}')][{1}]//td[contains(@class, 'left event')]"
+    },
+    "row_event_actual": {
+        "by": "xpath",
+        "locator": "//tr[contains(@data-event-datetime,'{0}')][{1}]//td[contains(@class, 'actual')]"
+    },
+    "row_event_forecast": {
+        "by": "xpath",
+        "locator": "//tr[contains(@data-event-datetime,'{0}')][{1}]//td[contains(@class, 'forecast')]"
+    },
+    "row_event_prev": {
+        "by": "xpath",
+        "locator": "//tr[contains(@data-event-datetime,'{0}')][{1}]//td[contains(@class, 'prev')]"
+    },
+    "row_event": {
+        "by": "xpath",
+        "locator": "//tr[contains(@data-event-datetime,'{0}') and contains(@id, 'eventRowId')][{1}]"
+    },
+    "econ_cal_load_spinner": {
+        "by": "xpath",
+        "locator": "//div[@id='economicCalendarLoading']//img"
+    }
+}
