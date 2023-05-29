@@ -19,6 +19,30 @@
         "by": "xpath",
         "locator": "//table[@id='economicCalendarData']//tbody//tr"
     },
+    "econ_table_row_by_index": {
+        "by": "xpath",
+        "locator": "(//table[@id='economicCalendarData']//tbody//tr)[{0}]"
+    },
+    "econ_table_row_currency_by_index": {
+        "by": "xpath",
+        "locator": "(//table[@id='economicCalendarData']//tbody//tr)[{0}]//td[contains(@class, 'flagCur')]//span"
+    },
+    "econ_table_row_event_by_index": {
+        "by": "xpath",
+        "locator": "(//table[@id='economicCalendarData']//tbody//tr)[{0}]//td[contains(@class, 'event')]"
+    },
+    "econ_table_row_event_previous_by_index": {
+        "by": "xpath",
+        "locator": "(//table[@id='economicCalendarData']//tbody//tr)[{0}]//td[contains(@id, 'Previous')]"
+    },
+    "econ_table_row_event_forecast_by_index": {
+        "by": "xpath",
+        "locator": "(//table[@id='economicCalendarData']//tbody//tr)[{0}]//td[contains(@id, 'Forecast')]"
+    },
+    "econ_table_row_event_actual_by_index": {
+        "by": "xpath",
+        "locator": "(//table[@id='economicCalendarData']//tbody//tr)[{0}]//td[contains(@id, 'Actual')]"
+    },
     "econ_table_row_events": {
         "by": "xpath",
         "locator": "//tr[contains(@id, 'eventRow')]"
@@ -83,13 +107,17 @@
         "by": "xpath",
         "locator": "//table[@id='economicCalendarData']//tbody//tr[contains(@id, '{0}')][{1}]//td[contains(@class, 'sentiment')]/span[contains(text(), 'Holiday')]//..//preceding-sibling::td[contains(@class, 'flagCur')]//span"
     },
+    "econ_table_row_time_holiday_country_by_event_id_country_index": {
+        "by": "xpath",
+        "locator": "//table[@id='economicCalendarData']//tbody//tr[contains(@id, '{0}')][{1}]/td[contains(@class, 'first left') and contains(text(), '')]//..//preceding-sibling::tr//td[contains(@class, 'theDay')]"
+    },
     "econ_table_row_event_holiday_count": {
         "by": "xpath",
-        "locator": "//table[@id='economicCalendarData']//tbody//tr[contains(@id, '{0}')]//preceding-sibling::tr//td[contains(text(), '{1}')]"
+        "locator": "//td[contains(text(), '{0}')]//..//following-sibling::tr[contains(@id, '{1}')]"
     },
-    "econ_table_row_event_holiday_count_old": {
+    "econ_table_row_time_holiday_count": {
         "by": "xpath",
-        "locator": "//table[@id='economicCalendarData']//tbody//tr[contains(@id, '{0}')]//td[contains(@class, 'sentiment')]/span[contains(text(), 'Holiday')]//..//preceding-sibling::td[contains(@class, 'flagCur')]"
+        "locator": "//table[@id='economicCalendarData']//tbody//tr[contains(@id, '{0}')]/td[contains(@class, 'first left') and contains(text(), '')]"
     },
     "econ_table_row_event_by_event_id": {
         "by": "xpath",
