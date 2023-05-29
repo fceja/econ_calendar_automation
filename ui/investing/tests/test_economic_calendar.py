@@ -117,18 +117,24 @@ class TestEconomicCalendar(TestObject):
 
         # countries = ['USA']
         countries = {
-            "USA": "USD",
-            "Europe": "EUR"
+            "Australia": "AUD",
+            "Canada": "CAD",
+            "Europe": "EUR",
+            "Germany": "EUR/GER",
+            "Japan": "JPY",
+            "New_Zealand": "NZD",
+            "Switzerland": "CHF",
+            "UK": "GBP",
+            "USA": "USD"
         }
         for country in countries.keys():
-            # self.filter_country_select_modal.click_btn_country_selection(country)
             self.filter_country_select_modal.click_btn_country_selection(country)
         self.filter_country_select_modal.click_btn_apply()
 
         self.econ_cal.click_btn_icon_calendar()
 
         start_date_str = '05/25/2023'
-        today_date_str = '05/30/2023'
+        today_date_str = '05/26/2023'
 
         self.date_select_modal.set_calendar_date(start_date= start_date_str, end_date=today_date_str)
         self.econ_cal.wait_for_econ_cal_spinner_invisible()

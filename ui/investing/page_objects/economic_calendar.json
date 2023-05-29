@@ -31,6 +31,10 @@
         "by": "xpath",
         "locator": "//table[@id='economicCalendarData']//tbody//tr[contains(@id, '{0}')]//td[contains(@class, 'flagCur')]"
     },
+    "econ_table_row_currency_combined_country_by_event_id": {
+        "by": "xpath",
+        "locator": "//table[@id='economicCalendarData']//tbody//tr[contains(@id, '{0}')]//td[contains(@class, 'flagCur')]//span[contains(@title, '{1}')]"
+    },
     "econ_table_row_importance_by_event_id": {
         "by": "xpath",
         "locator": "//table[@id='economicCalendarData']//tbody//tr[contains(@id, '{0}')]//td[contains(@class, 'sentiment')]"

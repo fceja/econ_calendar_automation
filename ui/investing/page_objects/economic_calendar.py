@@ -425,7 +425,11 @@ class EconomicCalendar(PageObject):
                     forecast = self._get_dynamic_element_text('econ_table_row_forecast_by_event_id', row.get_attribute("id"))
                     actual = self._get_dynamic_element_text('econ_table_row_actual_by_event_id', row.get_attribute("id"))
 
-                # generate values for row
+
+                if currency == 'EUR':
+                    if self._wait_for_dynamic_element_present('econ_table_row_currency_combined_country_by_event_id', row.get_attribute("id"), 'Germany', wait_time=.01):
+                        currency = 'EUR/GER'
+
                 tValues = []
                 header_row = f'{currency.lower()}_event'
                 temp_event_dic[f'{header_row}'] = event
