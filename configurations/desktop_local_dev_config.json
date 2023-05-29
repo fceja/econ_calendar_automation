@@ -1,5 +1,5 @@
 {
-    "logLevel": "debug",
+    "logLevel": "info",
     "remoteServerUrl": "http://localhost:4444/wd/hub",
     "automationName": "XCUITest",
     "browserName": "chrome",

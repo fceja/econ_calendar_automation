@@ -354,7 +354,6 @@ class EconomicCalendar(PageObject):
         header_row = ['date_time', 'importance'] +  header_currency_list + ['previous', 'forecast', 'actual']
         return header_row, header_currency_list
 
-
     def reset_values(self, my_dic):
         for i in my_dic:
             my_dic[i]=None
@@ -374,10 +373,12 @@ class EconomicCalendar(PageObject):
         for item in header_country_event_list:
             temp_event_dic[item] = None
 
-        for row in table_data:
+        holiday_id_count=0
+        for i, row in enumerate(table_data):
             temp_event_dic = self.reset_values(temp_event_dic)
             assert temp_event_dic is not None
             if row.get_attribute("id") is None:
+
                 # NOTE - if row attribute id is none, row is a date
                 # dont need to do anything with row date, already considered with event, pass
                 pass
@@ -401,10 +402,7 @@ class EconomicCalendar(PageObject):
                     else:
                         raise Exception(f'Logic error date_text: {date_text}')
 
-                # parse event
-                event = self._get_dynamic_element_text('econ_table_row_event_by_event_id', row.get_attribute("id"))
-
-                # parse importanct
+                # parse importance
                 try:
                     importance = self._get_dynamic_element_attribute('econ_table_row_importance_by_event_id', 'data-img_key', row.get_attribute("id"))[-1]
 
@@ -414,17 +412,18 @@ class EconomicCalendar(PageObject):
 
                 if importance == 'Holiday':
                     importance = 0
-                    event = 'HOLIDAY - '+ event
-                    currency = self.get_currency_holiday(row, countries)
+                    currency, holiday_id_count = self. get_currency_holiday(row, holiday_id_count, date_str)
+
+                    event = self.get_holiday_event(row, currency)
                     previous = None
                     forecast = None
                     actual = None
                 else:
+                    event = self._get_dynamic_element_text('econ_table_row_event_by_event_id', row.get_attribute("id"))
                     currency = self._get_dynamic_element_text('econ_table_row_currency_by_event_id', row.get_attribute("id"))
                     previous = self._get_dynamic_element_text('econ_table_row_previous_by_event_id', row.get_attribute("id"))
                     forecast = self._get_dynamic_element_text('econ_table_row_forecast_by_event_id', row.get_attribute("id"))
                     actual = self._get_dynamic_element_text('econ_table_row_actual_by_event_id', row.get_attribute("id"))
-
 
                 if currency == 'EUR':
                     if self._wait_for_dynamic_element_present('econ_table_row_currency_combined_country_by_event_id', row.get_attribute("id"), 'Germany', wait_time=.01):
@@ -445,12 +444,51 @@ class EconomicCalendar(PageObject):
 
         csv_file.close()
 
-    def get_currency_holiday(self, row, countries):
-        for k, v in countries.items():
-            if self._wait_for_dynamic_element_present('econ_table_row_importance_holiday_flag_by_event_id', row.get_attribute("id"), k):
-                return v
+    COUNTRY_CURRENCY = {
+        "Australia": "AUD",
+        "Canada": "CAD",
+        "Europe": "EUR",
+        "Germany": "EUR/GER",
+        "Japan": "JPY",
+        "New_Zealand": "NZD",
+        "Switzerland": "CHF",
+        "United_Kingdom": "GBP",
+        "USA": "USD"
+    }
 
-        raise Exception(f'Logic error - Expected to find country in elem but did not -> {k}')
+    def get_holiday_event(self, row, currency):
+        if '/' in currency:
+            currency=currency.split('/')[1].title()
+        elif currency == 'CHF' :
+            currency = 'Switzerland'
+        elif currency == 'GBP' :
+            currency = 'United Kingdom'
+        elif currency == 'JPY' :
+            currency = 'Japan'
+        else:
+            currency=currency.title()
+
+        country = self._get_dynamic_element_text('econ_table_row_event_holiday_currency_by_event_id_country', row.get_attribute("id"), currency)
+        country = country.split(' ')[0]
+
+        country_event = self._get_dynamic_element_text('econ_table_row_event_holiday_country_by_event_id_country', row.get_attribute("id"), country)
+        return country_event
+
+    def get_currency(self, parsed_country):
+        return self.COUNTRY_CURRENCY[parsed_country]
+
+    def get_currency_holiday(self, row, holiday_id_counter, date_str):
+
+        holiday_count_len = len(self._get_dynamic_elements('econ_table_row_event_holiday_count', row.get_attribute("id"), date_str))
+        country = self._get_dynamic_element_attribute('econ_table_row_event_holiday_country_by_event_id_country_index', 'data-img_key',row.get_attribute("id"), holiday_id_counter+1)
+        holiday_id_counter += 1
+
+        if holiday_id_counter >= holiday_count_len:
+            holiday_id_counter = 0
+
+        result = self.get_currency(country)
+
+        return result, holiday_id_counter
 
     def get_tomorrows_economic_calendar(self):
         """

@@ -133,8 +133,8 @@ class TestEconomicCalendar(TestObject):
 
         self.econ_cal.click_btn_icon_calendar()
 
-        start_date_str = '05/25/2023'
-        today_date_str = '05/26/2023'
+        start_date_str = '05/01/2023'
+        today_date_str = '05/31/2023'
 
         self.date_select_modal.set_calendar_date(start_date= start_date_str, end_date=today_date_str)
         self.econ_cal.wait_for_econ_cal_spinner_invisible()
