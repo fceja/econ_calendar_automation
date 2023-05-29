@@ -35,6 +35,7 @@ class EconomicCalendar(PageObject):
         self.wait_for_econ_cal_spinner_invisible()
 
     def click_btn_icon_calendar(self):
+        self._move_to_element('btn_icon_date_picker')
         self._wait_for_element_visible('btn_icon_date_picker')
         self._click_element('btn_icon_date_picker')
     # endregion Clickers
@@ -337,111 +338,115 @@ class EconomicCalendar(PageObject):
 
         return date_events
 
-    def table_data_to_csv(self, days_ago):
+    def create_dir_file(self):
         today_dt = datetime.today()
         folder_path = f'mation-scan_out/{today_dt.year}-{today_dt.month}-{today_dt.day}'
         if not os.path.exists(folder_path):
             os.makedirs(folder_path)
 
-        csv_file = open(f'{folder_path}/output-{days_ago}-days-ago.csv', 'w', newline='')
-        csv_writer = csv.writer(csv_file)
+        return open(f'{folder_path}/output.csv', 'w', newline='')
 
-        csv_writer.writerow(['date_time', 'importance', 'aud_event', 'cad_event', 'chf_event', 'eur_event', 'gbp_event', 'jpy_event', 'nzd_event', 'usd_event', 'previous', 'forecast', 'actual'])
+    def get_csv_header_row(self, countries):
+        header_currency_list = []
+        for currency in countries.values():
+            header_currency_list.append(f'{currency.lower()}_event')
+
+        header_row = ['date_time', 'importance'] +  header_currency_list + ['previous', 'forecast', 'actual']
+        return header_row, header_currency_list
+
+
+    def reset_values(self, my_dic):
+        for i in my_dic:
+            my_dic[i]=None
+
+        return my_dic
+
+    def table_data_to_csv(self, countries):
+        csv_file = self.create_dir_file()
+        csv_writer = csv.writer(csv_file)
+        header_row, header_country_event_list = self.get_csv_header_row(countries)
+        csv_writer.writerow(header_row)
 
         table_data = self._get_elements('econ_table_rows')
 
-        country_event = {}
+        temp_event_dic = {}
 
-        # using selenium obj since e.text does not consider empty values with \n
+        for item in header_country_event_list:
+            temp_event_dic[item] = None
+
         for row in table_data:
-            # reset
-            country_event['aud_event'] = None
-            country_event['aud_event'] = None
-            country_event['cad_event'] = None
-            country_event['chf_event'] = None
-            country_event['eur_event'] = None
-            country_event['gbp_event'] = None
-            country_event['jpy_event'] = None
-            country_event['nzd_event'] = None
-            country_event['usd_event'] = None
-
+            temp_event_dic = self.reset_values(temp_event_dic)
+            assert temp_event_dic is not None
             if row.get_attribute("id") is None:
-            # NOTE - if row attribute id is none, row is a date
-            # dont need to do anything with row date, already considered with event, pass
-                # date_str = row.text
-                # date_obj = datetime.strptime(date_str, "%A, %B %d, %Y")
-                # iso_datetime_str = date_obj.strftime("%Y-%m-%dT%H:%M:%SZ")
-                # print(f'iso_datetime_str 1: {iso_datetime_str}')
+                # NOTE - if row attribute id is none, row is a date
+                # dont need to do anything with row date, already considered with event, pass
                 pass
 
             else:
                 # parse date
                 date_str = self._get_dynamic_element_attribute('econ_table_row_by_event_id', 'data-event-datetime', row.get_attribute("id"))
-                self.logger.debug(f'date_str: {date_str}')
-                self.logger.debug(f'date_str: {date_str}')
+                iso_datetime_str = None
                 if date_str is not None:
                     date_obj = datetime.strptime(date_str, "%Y/%m/%d %H:%M:%S")
                     iso_datetime_str = date_obj.strftime("%Y-%m-%dT%H:%M:%SZ")
                 else:
                     date_text = self._get_dynamic_element_text('econ_table_row_date_text_by_event_id', row.get_attribute("id"))
-                    self.logger.debug(f'date_text: {date_text}')
                     if date_text == 'All Day':
-                        iso_datetime_str == 'All Day'
+                        date_str = self._get_dynamic_element_text('econ_table_row_date_by_event_id', row.get_attribute("id"))
+
+                        date_obj = datetime.strptime(date_str, "%A, %B %d, %Y")
+
+                        iso_datetime_str = date_obj.strftime("%Y-%m-%dT%H:%M:%SZ")
+
                     else:
                         raise Exception(f'Logic error date_text: {date_text}')
 
-                # print(f'iso_datetime_str 2: {iso_datetime_str}')
+                # parse event
+                event = self._get_dynamic_element_text('econ_table_row_event_by_event_id', row.get_attribute("id"))
 
-                # NOTE: set time zone here, however, not needed since webpage already considers timezone
-                # date_obj_utc = date_obj.astimezone(timezone.utc)
-                # iso_datetime_str = date_obj_utc.strftime("%Y-%m-%dT%H:%M:%SZ")
-
-                # parse event row data
-                currency = self._get_dynamic_element_text('econ_table_row_currency_by_event_id', row.get_attribute("id"))
-
+                # parse importanct
                 try:
                     importance = self._get_dynamic_element_attribute('econ_table_row_importance_by_event_id', 'data-img_key', row.get_attribute("id"))[-1]
 
                 except:
-                    print(f'entered except')
                     importance = self._get_dynamic_element_text('econ_table_row_importance_holiday_by_event_id', row.get_attribute("id"))
+                    assert importance == 'Holiday', f'Expected imporance to be Holiday but was not -> {importance}'
 
-                event = self._get_dynamic_element_text('econ_table_row_event_by_event_id', row.get_attribute("id"))
-
-                try:
-                    previous = self._get_dynamic_element_text('econ_table_row_previous_by_event_id', row.get_attribute("id"), wait_time=.01)
-                except:
+                if importance == 'Holiday':
+                    importance = 0
+                    event = 'HOLIDAY - '+ event
+                    currency = self.get_currency_holiday(row, countries)
                     previous = None
-
-                try:
-                    forecast = self._get_dynamic_element_text('econ_table_row_forecast_by_event_id', row.get_attribute("id"), wait_time=.01)
-                except:
                     forecast = None
-
-                try:
-                    actual = self._get_dynamic_element_text('econ_table_row_actual_by_event_id', row.get_attribute("id"), wait_time=.01)
-                except:
                     actual = None
+                else:
+                    currency = self._get_dynamic_element_text('econ_table_row_currency_by_event_id', row.get_attribute("id"))
+                    previous = self._get_dynamic_element_text('econ_table_row_previous_by_event_id', row.get_attribute("id"))
+                    forecast = self._get_dynamic_element_text('econ_table_row_forecast_by_event_id', row.get_attribute("id"))
+                    actual = self._get_dynamic_element_text('econ_table_row_actual_by_event_id', row.get_attribute("id"))
 
-                country_event[f'{currency.lower()}_event'] = event
+                # generate values for row
+                tValues = []
+                header_row = f'{currency.lower()}_event'
+                temp_event_dic[f'{header_row}'] = event
 
-                csv_writer.writerow([
-                    iso_datetime_str,
-                    importance,
-                    country_event['aud_event'],
-                    country_event['cad_event'],
-                    country_event['chf_event'],
-                    country_event['eur_event'],
-                    country_event['gbp_event'],
-                    country_event['jpy_event'],
-                    country_event['nzd_event'],
-                    country_event['usd_event'],
-                    previous,
-                    forecast,
-                    actual
-                ])
+                for value in temp_event_dic.values():
+                    if value is not None:
+                        tValues.append(value)
+                    else:
+                        tValues.append(None)
+                header_row = [iso_datetime_str, importance ] +  tValues + [previous, forecast, actual]
+
+                csv_writer.writerow(header_row)
 
         csv_file.close()
+
+    def get_currency_holiday(self, row, countries):
+        for k, v in countries.items():
+            if self._wait_for_dynamic_element_present('econ_table_row_importance_holiday_flag_by_event_id', row.get_attribute("id"), k):
+                return v
+
+        raise Exception(f'Logic error - Expected to find country in elem but did not -> {k}')
 
     def get_tomorrows_economic_calendar(self):
         """
@@ -471,9 +476,6 @@ class EconomicCalendar(PageObject):
 
         header= self.get_calendar_table_header()
         self.logger.debug(f"\n\ntest header-> {header}")
-
-        # date= self.get_calendar_table_date()
-        # self.logger.debug(f"\n\ntest date-> {date}")
 
         rows= self.get_calendar_table_rows()
         self.logger.debug(f"\n\ntest rows -> {rows}")
