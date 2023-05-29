@@ -139,6 +139,9 @@ class TestEconomicCalendar(TestObject):
         self.date_select_modal.set_calendar_date(start_date= start_date_str, end_date=today_date_str)
         self.econ_cal.wait_for_econ_cal_spinner_invisible()
 
+        self.econ_cal.scroll_to_last_row()
+        self.econ_cal.scroll_to_first_row()
+
         self.econ_cal.table_data_to_csv(countries)
 
     def test_get_tomorrows_economic_calendar(self):

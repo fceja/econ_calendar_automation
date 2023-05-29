@@ -763,7 +763,7 @@ class PageObject(object):
     def _clear_element_data(self, json_key):
         by, locator = self._get_locator(json_key)
         self.driver.find_element(by, locator).clear()
-        
+
     def load(self, json_key='iframe'):
         self._pause(5)
         self.driver.switch_to.frame(self._get_element(json_key))
@@ -776,6 +776,10 @@ class PageObject(object):
 
     def scroll_dynamic_element_into_view(self, json_key, *args):
         element = self._get_dynamic_element(json_key, *args)
+        self.driver.execute_script('arguments[0].scrollIntoView();', element)
+
+    def scroll_element_into_view(self, json_key):
+        element = self._get_dynamic_element(json_key)
         self.driver.execute_script('arguments[0].scrollIntoView();', element)
 
     def switch_to_new_window(self):

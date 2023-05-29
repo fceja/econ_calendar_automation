@@ -312,6 +312,22 @@ class EconomicCalendar(PageObject):
 
         return events
 
+    def scroll_to_first_row(self):
+        self.scroll_element_into_view('econ_table_first_row')
+        self._wait_for_element_visible('econ_table_first_row')
+
+    def scroll_to_last_row(self):
+        element_count = 0
+        get_event_elements_len = len(self._get_elements('econ_table_row_events'))
+
+        while get_event_elements_len > element_count:
+            element_count = get_event_elements_len
+
+            self.scroll_element_into_view('econ_table_last_row')
+            self.wait_for_econ_cal_spinner_invisible()
+
+            get_event_elements_len = len(self._get_elements('econ_table_row_events'))
+
     def get_table_data(self):
         date_events= {}
         completed = False
@@ -453,18 +469,22 @@ class EconomicCalendar(PageObject):
         "New_Zealand": "NZD",
         "Switzerland": "CHF",
         "United_Kingdom": "GBP",
-        "USA": "USD"
+        "United_States": "USD"
     }
 
     def get_holiday_event(self, row, currency):
         if '/' in currency:
             currency=currency.split('/')[1].title()
+        elif currency == 'CAD' :
+            currency = 'Canada'
         elif currency == 'CHF' :
             currency = 'Switzerland'
         elif currency == 'GBP' :
             currency = 'United Kingdom'
         elif currency == 'JPY' :
             currency = 'Japan'
+        elif currency == 'USD' :
+            currency = 'United States'
         else:
             currency=currency.title()
 

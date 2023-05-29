@@ -19,6 +19,18 @@
         "by": "xpath",
         "locator": "//table[@id='economicCalendarData']//tbody//tr"
     },
+    "econ_table_row_events": {
+        "by": "xpath",
+        "locator": "//tr[contains(@id, 'eventRow')]"
+    },
+    "econ_table_first_row": {
+        "by": "xpath",
+        "locator": "//tr[contains(@id, 'eventRow')][1]"
+    },
+    "econ_table_last_row": {
+        "by": "xpath",
+        "locator": "//tr[contains(@id, 'eventRow')][last()]"
+    },
     "econ_table_row_by_event_id": {
         "by": "xpath",
         "locator": "//table[@id='economicCalendarData']//tbody//tr[contains(@id, '{0}')]"
