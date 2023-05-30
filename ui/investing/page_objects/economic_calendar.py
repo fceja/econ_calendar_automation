@@ -384,9 +384,9 @@ class EconomicCalendar(PageObject):
 
         return my_dic
 
-    def parse_row_time(self, i, row, current_date_section):
+    def parse_row_time(self, i, current_date_section):
         # get date event time
-        date_event_time = self._get_dynamic_element_attribute('econ_table_row_by_event_id', 'data-event-datetime', row.get_attribute("id"))
+        date_event_time = self._get_dynamic_element_attribute('econ_table_row_by_event_id', 'data-event-datetime', i)
 
         iso_datetime_str = None
         if date_event_time is not None:
@@ -394,7 +394,8 @@ class EconomicCalendar(PageObject):
             iso_datetime_str = date_obj.strftime("%Y-%m-%dT%H:%M:%SZ")
 
         else:
-            time_text = self._get_dynamic_element_text('econ_table_row_date_text_by_event_id', row.get_attribute("id"))
+            # holiday or special event, use recent row date
+            time_text = self._get_dynamic_element_text('econ_table_row_date_text_by_event_id', i)
             if time_text == 'All Day' or time_text == '':
                 date_obj = datetime.strptime(current_date_section, "%A, %B %d, %Y")
 
@@ -405,17 +406,17 @@ class EconomicCalendar(PageObject):
 
         return iso_datetime_str
 
-    def get_importance(self, row):
+    def get_importance(self, i, row):
         try:
-            return self._get_dynamic_element_attribute('econ_table_row_importance_by_event_id', 'data-img_key', row.get_attribute("id"))[-1]
+            return self._get_dynamic_element_attribute('econ_table_row_importance_by_event_id', 'data-img_key', i)[-1]
 
         except:
-            importance = self._get_dynamic_element_text('econ_table_row_importance_holiday_by_event_id', row.get_attribute("id"))
+            importance = self._get_dynamic_element_text('econ_table_row_importance_holiday_by_event_id', i)
             assert importance == 'Holiday', f'Expected imporance to be Holiday but was not -> {importance}'
             return importance
 
-    def table_data_to_csv(self, countries):
-        csv_file = self.create_dir_file()
+    def table_data_to_csv(self, countries, start_date_str, today_date_str):
+        csv_file = self.create_dir_file(start_date_str, today_date_str)
         csv_writer = csv.writer(csv_file)
         header_row, header_country_event_list = self.get_csv_header_row(countries)
         csv_writer.writerow(header_row)
@@ -438,8 +439,8 @@ class EconomicCalendar(PageObject):
 
             else:
                 # row is an event, parse data
-                iso_datetime_str = self.parse_row_time(i, row, current_date_section)
-                importance = self.get_importance(row)
+                iso_datetime_str = self.parse_row_time(i+1, current_date_section)
+                importance = self.get_importance(i+1, row)
                 importance, currency, event, previous, forecast, actual = self.get_event_data(i+1, importance)
 
                 # format data for csv row
@@ -605,7 +606,7 @@ class EconomicCalendar(PageObject):
 
     # region Waiters
     def wait_for_econ_cal_spinner_invisible(self):
-        self._wait_for_element_invisible('econ_cal_load_spinner', wait_time=1)
+        self._wait_for_element_invisible('econ_cal_load_spinner')
     # endregion Wait
 
     # region Macros
