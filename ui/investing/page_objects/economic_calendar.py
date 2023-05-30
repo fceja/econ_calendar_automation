@@ -316,16 +316,23 @@ class EconomicCalendar(PageObject):
         self._wait_for_element_visible('econ_table_first_row')
 
     def scroll_to_last_row(self):
-        element_count = 0
-        get_event_elements_len = len(self._get_elements('econ_table_row_events'))
-
-        while get_event_elements_len > element_count:
-            element_count = get_event_elements_len
-
+        get_last_elem = None
+        new_last_elem = None
+        while True:
             self.scroll_element_into_view('econ_table_last_row')
             self.wait_for_econ_cal_spinner_invisible()
+            self.scroll_element_into_view('econ_table_last_row')
+            assert self._wait_for_element_visible('econ_table_last_row')
 
-            get_event_elements_len = len(self._get_elements('econ_table_row_events'))
+            if get_last_elem is None:
+                get_last_elem = self._get_element('econ_table_last_row')
+            else:
+                new_last_elem = self._get_element('econ_table_last_row')
+
+                if get_last_elem.id == new_last_elem.id:
+                    break
+
+                get_last_elem = new_last_elem
 
     def get_table_data(self):
         date_events= {}
