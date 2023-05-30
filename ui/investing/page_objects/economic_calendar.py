@@ -360,9 +360,11 @@ class EconomicCalendar(PageObject):
 
         return date_events
 
-    def create_dir_file(self):
-        today_dt = datetime.today()
-        folder_path = f'mation-scan_out/{today_dt.year}-{today_dt.month}-{today_dt.day}'
+    def create_dir_file(self, start_date_str, today_date_str):
+        start_date_str = start_date_str.replace('/', '_')
+        today_date_str = today_date_str.replace('/', '_')
+
+        folder_path = f'mation-scan_out/{start_date_str}-{today_date_str}'
         if not os.path.exists(folder_path):
             os.makedirs(folder_path)
 

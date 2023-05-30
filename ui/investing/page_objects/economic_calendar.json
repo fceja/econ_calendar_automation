@@ -57,9 +57,17 @@
     },
     "econ_table_row_by_event_id": {
         "by": "xpath",
+        "locator": "//table[@id='economicCalendarData']//tbody//tr[{0}]"
+    },
+    "econ_table_row_by_event_id_old": {
+        "by": "xpath",
         "locator": "//table[@id='economicCalendarData']//tbody//tr[contains(@id, '{0}')]"
     },
     "econ_table_row_date_text_by_event_id": {
+        "by": "xpath",
+        "locator": "//table[@id='economicCalendarData']//tbody//tr[{0}]/td[contains(@class, 'first left')]"
+    },
+    "econ_table_row_date_text_by_event_id_old": {
         "by": "xpath",
         "locator": "//table[@id='economicCalendarData']//tbody//tr[contains(@id, '{0}')]/td[contains(@class, 'first left')]"
     },
@@ -72,6 +80,10 @@
         "locator": "//table[@id='economicCalendarData']//tbody//tr[contains(@id, '{0}')]//td[contains(@class, 'flagCur')]//span[contains(@title, '{1}')]"
     },
     "econ_table_row_importance_by_event_id": {
+        "by": "xpath",
+        "locator": "//table[@id='economicCalendarData']//tbody//tr[{0}]//td[contains(@class, 'sentiment')]"
+    },
+    "econ_table_row_importance_by_event_id_old": {
         "by": "xpath",
         "locator": "//table[@id='economicCalendarData']//tbody//tr[contains(@id, '{0}')]//td[contains(@class, 'sentiment')]"
     },
@@ -88,6 +100,10 @@
         "locator": "//table[@id='economicCalendarData']//tbody//tr[contains(@id, '{0}')]//preceding-sibling::tr[1]//td[contains(@class, theDay)]"
     },
     "econ_table_row_importance_holiday_by_event_id": {
+        "by": "xpath",
+        "locator": "//table[@id='economicCalendarData']//tbody//tr[{0}]//td[contains(@class, 'sentiment')]/span[contains(text(), 'Holiday')]"
+    },
+    "econ_table_row_importance_holiday_by_event_id_old": {
         "by": "xpath",
         "locator": "//table[@id='economicCalendarData']//tbody//tr[contains(@id, '{0}')]//td[contains(@class, 'sentiment')]/span[contains(text(), 'Holiday')]"
     },

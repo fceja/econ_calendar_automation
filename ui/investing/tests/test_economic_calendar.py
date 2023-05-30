@@ -142,7 +142,7 @@ class TestEconomicCalendar(TestObject):
         self.econ_cal.scroll_to_last_row()
         self.econ_cal.scroll_to_first_row()
 
-        self.econ_cal.table_data_to_csv(countries)
+        self.econ_cal.table_data_to_csv(countries, start_date_str, today_date_str)
 
     def test_get_tomorrows_economic_calendar(self):
         """
