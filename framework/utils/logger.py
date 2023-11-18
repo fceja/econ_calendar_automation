@@ -8,6 +8,7 @@ from framework.utils.config_parser import ConfigParser
 
 loggers = {}
 
+
 class Logger(object):
     """
     """

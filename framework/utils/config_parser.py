@@ -1,59 +1,55 @@
 #!/usr/bin/python
 
-"""
-copyright: Copyright 2019, Value Stream Engineering
-email: contact@valuestreamengineers.com
-"""
 import os
 import json
 
 
 class ConfigParser(object):
     """
-    Handles the json configuration file that dictates
-    test case scenarios. It's using an environment variable
-    CONFIG_FILE to locate configuration file.
-
+    Parse config file properties.
     """
-    CONFIG_FILE_VARIABLE = 'CONFIG_FILE'
+    CONFIG_DATA = None
+    CONFIG_PATH_ENV_VAR = 'CONFIG_PATH'  # supplied in command-line
 
-    def __init__(self, file_path=None):
+    def __init__(self, config_path=None):
         """
-        File_path refers to the json document that contains test
-        scenario details. By default it will use the value from
-        CONFIG_FILE environment variable, but can be passed in
-        as the first argument.
-
-        :param file_path: If not supplied, uses environment variable CONFIG_FILE
-
+        :param config_path: use 'config_path' if provided, else use CONFIG_PATH_ENV_VAR'.
         """
-        if not file_path:
-            file_path=os.getenv(self.CONFIG_FILE_VARIABLE)
+        if not config_path:
+            config_path = os.getenv(self.CONFIG_PATH_ENV_VAR)
 
-        self.config_data = None
-        self.validate_config_file(file_path)
-        self.parse_config_file(file_path)
+        print(f'file_path entered : {config_path}')
 
-    def validate_config_file(self, file_path):
-        """
-        Validates the existence of the config file to be used
-        for testing.
-
-        """
-        if not file_path:
-            raise IOError("DEBUG --- Please set the '{0}' environment variable.".format(
-                self.CONFIG_FILE_VARIABLE))
-
-        if not os.path.exists(file_path):
-            raise IOError("DEBUG --- Specified '{0}' did not exist.".format(file_path))
-
-    def parse_config_file(self, file_path):
-        with open(file_path, 'r+') as json_file:
-            self.config_data = json.load(json_file)
+        self.validate_config_path_exists(config_path)
+        self.parse_config_file(config_path)
 
     def __getitem__(self, key):
+        """
+        Allows class instance to be treated like dictionary.
+
+        Example:
+        self.config = ConfigParser()
+        self.config['getData']
+
+        # if key exists on 'self.CONFIG_DATA', returns value, else None.
+        """
         try:
-            return self.config_data[key]
+            return self.CONFIG_DATA[key]
         except:
             return None
 
+    def validate_config_path_exists(self, config_path):
+        """
+        Verifies config file path exists, else throws error.
+        """
+        if not config_path:
+            raise IOError(
+                f"'CONFIG_FILE_PATH' not provided in command-line pytest invocation.")
+
+        if not os.path.exists(config_path):
+            raise IOError(
+                f"Provided 'CONFIG_FILE_PATH' does not exist -> [{config_path}]")
+
+    def parse_config_file(self, config_path):
+        with open(config_path, 'r+') as json_file:
+            self.CONFIG_DATA = json.load(json_file)

@@ -7,6 +7,7 @@ from appium import webdriver
 from framework.utils.logger import Logger
 from framework.utils.config_parser import ConfigParser
 
+
 class TestObject(object):
     """
     This is a generic Test Object to handle setup and teardown
