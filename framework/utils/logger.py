@@ -4,42 +4,43 @@ import logging.handlers
 import os
 from pathlib import Path
 
-from framework.utils.config_parser import ConfigParser
-
 loggers = {}
 
 
 class Logger(object):
     """
+    Initiate logger Instance
     """
 
-    __file_dir = os.path.join(os.path.split(os.path.abspath(__file__))[0])
+    def __init__(self, config):
+        self.config = config
 
-    def __init__(self, application_name, *args, **kwargs):
-        self.config = ConfigParser()
-        self.app = application_name
+    def get_logger(self):
+        # check if logs already exist, else create
+        log_name = self.config['logger']['logName'];
+        if loggers.get(log_name):
 
-    def get_logger(self, name):
-        if loggers.get(name):
-            return loggers.get(name)
+            return loggers.get(log_name)
         else:
-            logger = logging.getLogger(name)
-            logger.setLevel(self.config['logLevel'].upper())
+            __file_dir = os.path.join(os.path.split(os.path.abspath(__file__))[0])
 
-            log_dir = os.path.join(self.__file_dir, '..', '..', 'logs')
+            logger = logging.getLogger(log_name)
+            logger.setLevel(self.config['logger']['logLevel'].upper())
+
+            log_dir = os.path.join(__file_dir, '..', '..', 'logs')
             Path(log_dir).mkdir(parents=True, exist_ok=True)
 
-            log_filename = os.path.join(log_dir, name + '.log')
+            log_filename = os.path.join(log_dir, log_name + '.log')
             handler = logging.handlers.RotatingFileHandler(
                 log_filename,
-                maxBytes=(1024*1024)*500,  # 500 M #TODO: Define in config?
-                backupCount=1
+                maxBytes=(1024*1024)*1000,
             )
 
-            formatter = logging.Formatter('%(asctime)s %(levelname)s: %(message)s')
+            formatter = logging.Formatter(
+                '%(asctime)s %(levelname)s: %(message)s')
             handler.setFormatter(formatter)
 
             logger.addHandler(handler)
-            loggers[name] = logger
+            loggers[log_name] = logger
 
             return logger

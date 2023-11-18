@@ -30,8 +30,9 @@ class TestObject(object):
     utils = None
 
     def setup_method(self):
-        self.logger = Logger(application_name='framework').get_logger(name='application')
-        self.configuration = ConfigParser()
+        self.config = ConfigParser()
+
+        self.logger = Logger(self.config).get_logger()
 
         # Controller setup
         self.init_driver()
