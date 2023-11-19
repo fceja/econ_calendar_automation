@@ -1,26 +1,26 @@
 {
-    "btn_apply": {
-        "locator_type": "xpath",
-        "locator": "//div[contains(@class, 'submitBox')]//a[contains(@class, 'Arrow') and contains(text(), 'Apply')]"
-    },
-    "btn_clear_country_selections": {
-        "locator_type": "xpath",
-        "locator": "//div[@id='calendarFilterBox_country']//a[contains(text(), 'Clear')]"
-    },
-    "input_country_option": {
-        "locator_type": "xpath",
-        "locator": "//div[@id='calendarFilterBox_country']//ul[contains(@class, 'countryOption')]//li//span[contains(@class, '{0}')]//..//input"
-    },
-    "btn_filter_countries": {
-        "locator_type": "xpath",
-        "locator": "//a[@id='filterStateAnchor']"
-    },
-    "container_filters": {
-        "locator_type": "xpath",
-        "locator": "//div[@id='filtersWrapper']"
-    },
-    "container_countries": {
-        "locator_type": "xpath",
-        "locator": "//div[@id='calendarFilterBox_country']"
-    }
+  "btn_apply": {
+    "locator_type": "xpath",
+    "locator": "//div[contains(@class, 'submitBox')]//a[contains(@class, 'Arrow') and contains(text(), 'Apply')]"
+  },
+  "btn_clear_country_selections": {
+    "locator_type": "xpath",
+    "locator": "//div[@id='calendarFilterBox_country']//a[contains(text(), 'Clear')]"
+  },
+  "input_country_option": {
+    "locator_type": "xpath",
+    "locator": "//div[@id='calendarFilterBox_country']//ul[contains(@class, 'countryOption')]//li//span[contains(@class, '{0}')]//..//input"
+  },
+  "btn_filter_countries": {
+    "locator_type": "xpath",
+    "locator": "//a[@id='filterStateAnchor']"
+  },
+  "container_filters": {
+    "locator_type": "xpath",
+    "locator": "//div[@id='filtersWrapper']"
+  },
+  "container_countries": {
+    "locator_type": "xpath",
+    "locator": "//div[@id='calendarFilterBox_country']"
+  }
 }

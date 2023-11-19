@@ -1,14 +1,14 @@
 {
-    "btn_sign_in":{
-        "locator_type": "xpath",
-        "locator": "//a[@class='newButton orange' and contains(text(), 'Sign In')]"
-    },
-    "input_email": {
-        "locator_type": "xpath",
-        "locator": "//input[@id='loginFormUser_email']"
-    },
-    "input_password":{
-        "locator_type": "xpath",
-        "locator": "//input[@id='loginForm_password']"
-    }
+  "btn_sign_in": {
+    "locator_type": "xpath",
+    "locator": "//a[@class='newButton orange' and contains(text(), 'Sign In')]"
+  },
+  "input_email": {
+    "locator_type": "xpath",
+    "locator": "//input[@id='loginFormUser_email']"
+  },
+  "input_password": {
+    "locator_type": "xpath",
+    "locator": "//input[@id='loginForm_password']"
+  }
 }
