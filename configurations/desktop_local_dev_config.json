@@ -1,22 +1,26 @@
 {
-    "logLevel": "info",
-    "remoteServerUrl": "http://localhost:4444/wd/hub",
-    "automationName": "XCUITest",
+  "logger": {
+    "logLevel": "debug",
+    "logName": "investing_log"
+  },
+  "testProperties": {
+    "serverUrl": "https://www.investing.com"
+  },
+  "webDriver": {
     "browserName": "chrome",
     "browserVersion": "latest",
-    "platformName": "Mac OS X",
-    "pageLoadStrategy": "eager",
-    "webdriverImplicitWait": "5",
-    "testName": "",
-    "maximumWaitTime": "30",
-    "screenResolution": "1920x1200",
-    "serverUrl": "https://www.investing.com",
     "chromeOptions": {
-        "args": []
+      "args": []
     },
+    "maximumWaitTime": "10",
     "options": {
-        "screenResolution": "1920x1200",
-        "capturePerformance": false,
-        "extendedDebugging": false
-    }
+      "screenResolution": "1920x1200",
+      "capturePerformance": false,
+      "extendedDebugging": false
+    },
+    "pageLoadStrategy": "eager",
+    "remoteCommandExecutorUrl": "http://localhost:4444/wd/hub",
+    "screenResolution": "1920x1200",
+    "webdriverImplicitWait": "5"
+  }
 }

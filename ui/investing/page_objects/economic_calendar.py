@@ -12,6 +12,7 @@ class EconomicCalendar(PageObject):
     This class contains tests for Direct Bookings
 
     """
+
     def __init__(self, driver):
         super(EconomicCalendar, self).__init__(driver)
 
@@ -80,7 +81,8 @@ class EconomicCalendar(PageObject):
 
     def get_calendar_row_event(self, index):
         # offset, starts at 2
-        elems = self._get_dynamic_elements('economic_calendar_row_event_no_data', index+2)
+        elems = self._get_dynamic_elements(
+            'economic_calendar_row_event_no_data', index+2)
 
         if len(elems) == 1:
             return self._get_dynamic_element_text('economic_calendar_row_event_no_data', index+2)
@@ -109,10 +111,11 @@ class EconomicCalendar(PageObject):
             return None
 
     def get_calendar_row_stars_by_id_date_time(self, id, date_time, index):
-        selected=0
+        selected = 0
 
         # sentiment = self._get_dynamic_element_text('economic_calendar_row_sentiment', index+1)
-        sentiment = self._get_dynamic_element_text('economic_calendar_row_event_sentiment_by_id_date_time', id, date_time,index+1)
+        sentiment = self._get_dynamic_element_text(
+            'economic_calendar_row_event_sentiment_by_id_date_time', id, date_time, index+1)
         self.logger.debug(f"\n\ntest sentiment-> {sentiment}")
 
         if sentiment == 'Holiday':
@@ -120,7 +123,8 @@ class EconomicCalendar(PageObject):
 
         else:
             # stars = self._get_dynamic_elements_attribute('economic_calendar_row_stars', 'class', index+2)
-            stars = self._get_dynamic_elements_attribute('economic_calendar_row_event_sentiment_stars_by_id_date_time', 'class', id, date_time, index+1)
+            stars = self._get_dynamic_elements_attribute(
+                'economic_calendar_row_event_sentiment_stars_by_id_date_time', 'class', id, date_time, index+1)
             self.logger.debug(f"\n\ntest stars-> {stars}")
 
         for star in stars:
@@ -129,13 +133,15 @@ class EconomicCalendar(PageObject):
             elif 'grayEmptyBullishIcon' == star:
                 pass
             else:
-                raise IOError(f'Expected a valid star input but got -> [{star}]')
+                raise IOError(
+                    f'Expected a valid star input but got -> [{star}]')
 
         return f'{selected} out of {len(stars)}'
 
     def get_calendar_row_event_by_id_date_time(self, id, date_time, index):
         # offset, starts at 2
-        elems = self._get_dynamic_elements('economic_calendar_row_event_no_data_by_id_date_time', id, date_time, index+1)
+        elems = self._get_dynamic_elements(
+            'economic_calendar_row_event_no_data_by_id_date_time', id, date_time, index+1)
         self.logger.debug(f"\n\ntest elems-> {elems}")
 
         if len(elems) == 1:
@@ -146,10 +152,12 @@ class EconomicCalendar(PageObject):
     def get_calendar_row_actual_by_id_date_time(self, id, date_time, index):
         # offset, starts at 2
         if self._wait_for_dynamic_element_visible('economic_calendar_row_event_actual_by_id_date_time', id, date_time, index+1, wait_time=0.5):
-            result = self._get_dynamic_element_attribute('economic_calendar_row_event_actual_font_color_by_id_date_time', 'title', id, date_time, index+1)
+            result = self._get_dynamic_element_attribute(
+                'economic_calendar_row_event_actual_font_color_by_id_date_time', 'title', id, date_time, index+1)
             self.logger.debug(f"\n\ntest this class result-> {result}")
 
-            orig = self._get_dynamic_element_text('economic_calendar_row_event_actual_by_id_date_time', id, date_time, index+1)
+            orig = self._get_dynamic_element_text(
+                'economic_calendar_row_event_actual_by_id_date_time', id, date_time, index+1)
             self.logger.debug(f"\n\ntest orig-> {orig}")
 
             if 'Better Than Expected' in result:
@@ -185,12 +193,15 @@ class EconomicCalendar(PageObject):
         # offset, starts at 1
         if self._wait_for_dynamic_element_visible('economic_calendar_row_event_previous_by_id_date_time', id, date_time, index+1, wait_time=0.5):
             # TODO: if red font or green
-            result = self._get_dynamic_element_attribute('economic_calendar_row_event_previous_font_color_by_id_date_time', 'class', id, date_time, index+1)
+            result = self._get_dynamic_element_attribute(
+                'economic_calendar_row_event_previous_font_color_by_id_date_time', 'class', id, date_time, index+1)
 
-            orig = self._get_dynamic_element_text('economic_calendar_row_event_previous_by_id_date_time', id, date_time, index+1)
+            orig = self._get_dynamic_element_text(
+                'economic_calendar_row_event_previous_by_id_date_time', id, date_time, index+1)
 
             if 'redFont' in result:
-                result = self._get_dynamic_element_attribute('economic_calendar_row_event_previous_by_id_date_time', 'title', id, date_time, index+1)
+                result = self._get_dynamic_element_attribute(
+                    'economic_calendar_row_event_previous_by_id_date_time', 'title', id, date_time, index+1)
                 self.logger.debug(f"\n\ntest -> 1.1 result -> {result}")
 
                 return {
@@ -204,7 +215,8 @@ class EconomicCalendar(PageObject):
             elif 'greenFont' in result:
                 self.logger.debug(f"\n\ntest -> 1.2")
 
-                result = self._get_dynamic_element_attribute('economic_calendar_row_event_previous_by_id_date_time', 'title', id, date_time, index+1)
+                result = self._get_dynamic_element_attribute(
+                    'economic_calendar_row_event_previous_by_id_date_time', 'title', id, date_time, index+1)
                 self.logger.debug(f"\n\ntest -> 1.1 result -> {result}")
 
                 return {
@@ -238,14 +250,15 @@ class EconomicCalendar(PageObject):
 
         self.logger.debug(f"\n\ntest date-> {date}")
 
-        elems = self._get_dynamic_elements('economic_calendar_row_events_by_date_time', id, date)
+        elems = self._get_dynamic_elements(
+            'economic_calendar_row_events_by_date_time', id, date)
 
-        event_rows={}
-        i=0
+        event_rows = {}
+        i = 0
         for _ in elems:
             event_rows.update({
                 # f'row_{i}':{
-                f'row_{i} - {date}':{
+                f'row_{i} - {date}': {
                     'time': self.get_calendar_row_time_by_id_date_time(id, date, i),
                     'country': self.get_calendar_row_flag_by_id_date_time(id, date, i),
                     'importance': self.get_calendar_row_stars_by_id_date_time(id, date, i),
@@ -255,7 +268,7 @@ class EconomicCalendar(PageObject):
                     'previous': self.get_calendar_row_previous_by_id_date_time(id, date, i)
                 }
             })
-            i+=1
+            i += 1
 
         return event_rows
 
@@ -303,7 +316,7 @@ class EconomicCalendar(PageObject):
         while not completed:
             try:
                 event = self.get_row_event_old(date, event_row_index)
-                events.update({event_row_index - 1 : event})
+                events.update({event_row_index - 1: event})
             except:
                 completed = True
 
@@ -335,7 +348,7 @@ class EconomicCalendar(PageObject):
                 get_last_elem = new_last_elem
 
     def get_table_data(self):
-        date_events= {}
+        date_events = {}
         completed = False
         date_row_index = 1
         while not completed:
@@ -347,7 +360,8 @@ class EconomicCalendar(PageObject):
                 day = today_list[2]
                 year = today_list[3]
 
-                date_obj = datetime.strptime(f'{month} {day} {year}', '%B %d %Y')
+                date_obj = datetime.strptime(
+                    f'{month} {day} {year}', '%B %d %Y')
                 curr_date = date_obj.strftime('%Y/%m/%d')
                 events = self.get_date_events(curr_date)
 
@@ -364,7 +378,7 @@ class EconomicCalendar(PageObject):
         start_date_str = start_date_str.replace('/', '_')
         today_date_str = today_date_str.replace('/', '_')
 
-        folder_path = f'mation-scan_out/{start_date_str}-{today_date_str}'
+        folder_path = f'output/{start_date_str}-{today_date_str}'
         if not os.path.exists(folder_path):
             os.makedirs(folder_path)
 
@@ -375,18 +389,20 @@ class EconomicCalendar(PageObject):
         for currency in countries.values():
             header_currency_list.append(f'{currency.lower()}_event')
 
-        header_row = ['date_time', 'importance'] +  header_currency_list + ['previous', 'forecast', 'actual']
+        header_row = ['date_time', 'importance'] + \
+            header_currency_list + ['previous', 'forecast', 'actual']
         return header_row, header_currency_list
 
     def reset_values(self, my_dic):
         for i in my_dic:
-            my_dic[i]=None
+            my_dic[i] = None
 
         return my_dic
 
     def parse_row_time(self, i, current_date_section):
         # get date event time
-        date_event_time = self._get_dynamic_element_attribute('econ_table_row_by_event_id', 'data-event-datetime', i)
+        date_event_time = self._get_dynamic_element_attribute(
+            'econ_table_row_by_event_id', 'data-event-datetime', i)
 
         iso_datetime_str = None
         if date_event_time is not None:
@@ -395,9 +411,11 @@ class EconomicCalendar(PageObject):
 
         else:
             # holiday or special event, use recent row date
-            time_text = self._get_dynamic_element_text('econ_table_row_date_text_by_event_id', i)
+            time_text = self._get_dynamic_element_text(
+                'econ_table_row_date_text_by_event_id', i)
             if time_text == 'All Day' or time_text == '':
-                date_obj = datetime.strptime(current_date_section, "%A, %B %d, %Y")
+                date_obj = datetime.strptime(
+                    current_date_section, "%A, %B %d, %Y")
 
                 iso_datetime_str = date_obj.strftime("%Y-%m-%dT%H:%M:%SZ")
 
@@ -411,14 +429,16 @@ class EconomicCalendar(PageObject):
             return self._get_dynamic_element_attribute('econ_table_row_importance_by_event_id', 'data-img_key', i)[-1]
 
         except:
-            importance = self._get_dynamic_element_text('econ_table_row_importance_holiday_by_event_id', i)
+            importance = self._get_dynamic_element_text(
+                'econ_table_row_importance_holiday_by_event_id', i)
             assert importance == 'Holiday', f'Expected imporance to be Holiday but was not -> {importance}'
             return importance
 
     def table_data_to_csv(self, countries, start_date_str, today_date_str):
         csv_file = self.create_dir_file(start_date_str, today_date_str)
         csv_writer = csv.writer(csv_file)
-        header_row, header_country_event_list = self.get_csv_header_row(countries)
+        header_row, header_country_event_list = self.get_csv_header_row(
+            countries)
         csv_writer.writerow(header_row)
 
         table_data = self._get_elements('econ_table_rows')
@@ -435,13 +455,16 @@ class EconomicCalendar(PageObject):
             assert temp_event_dic is not None
             if row.get_attribute("id") is None:
                 # row is not an event, save date only
-                current_date_section = self._get_dynamic_element_text('econ_table_row_by_index', i+1)
+                current_date_section = self._get_dynamic_element_text(
+                    'econ_table_row_by_index', i+1)
 
             else:
                 # row is an event, parse data
-                iso_datetime_str = self.parse_row_time(i+1, current_date_section)
+                iso_datetime_str = self.parse_row_time(
+                    i+1, current_date_section)
                 importance = self.get_importance(i+1, row)
-                importance, currency, event, previous, forecast, actual = self.get_event_data(i+1, importance)
+                importance, currency, event, previous, forecast, actual = self.get_event_data(
+                    i+1, importance)
 
                 # format data for csv row
                 tValues = []
@@ -454,8 +477,8 @@ class EconomicCalendar(PageObject):
                     else:
                         tValues.append(None)
 
-
-                csv_row_data = [iso_datetime_str, importance ] +  tValues + [previous, forecast, actual]
+                csv_row_data = [iso_datetime_str, importance] + \
+                    tValues + [previous, forecast, actual]
                 csv_writer.writerow(csv_row_data)
 
         csv_file.close()
@@ -472,16 +495,21 @@ class EconomicCalendar(PageObject):
 
         else:
             event = self.get_row_event(i)
-            previous = self._get_dynamic_element_text('econ_table_row_event_previous_by_index', i)
-            forecast = self._get_dynamic_element_text('econ_table_row_event_forecast_by_index', i)
-            actual = self._get_dynamic_element_text('econ_table_row_event_actual_by_index', i)
+            previous = self._get_dynamic_element_text(
+                'econ_table_row_event_previous_by_index', i)
+            forecast = self._get_dynamic_element_text(
+                'econ_table_row_event_forecast_by_index', i)
+            actual = self._get_dynamic_element_text(
+                'econ_table_row_event_actual_by_index', i)
 
         return importance, currency, event, previous, forecast, actual
 
     def get_date_str_holiday(self, row, holiday_id_time_count):
-        holiday_time_count_len = len(self._get_dynamic_elements('econ_table_row_time_holiday_count', row.get_attribute("id")))
+        holiday_time_count_len = len(self._get_dynamic_elements(
+            'econ_table_row_time_holiday_count', row.get_attribute("id")))
 
-        date_str = self._get_dynamic_element_text('econ_table_row_time_holiday_country_by_event_id_country_index', row.get_attribute("id"), holiday_id_time_count+1)
+        date_str = self._get_dynamic_element_text(
+            'econ_table_row_time_holiday_country_by_event_id_country_index', row.get_attribute("id"), holiday_id_time_count+1)
 
         holiday_id_time_count += 1
 
@@ -489,7 +517,6 @@ class EconomicCalendar(PageObject):
             holiday_id_time_count = 0
 
         return date_str, holiday_id_time_count
-
 
     COUNTRY_CURRENCY = {
         "Australia": "AUD",
@@ -510,7 +537,8 @@ class EconomicCalendar(PageObject):
         return self.COUNTRY_CURRENCY[parsed_country]
 
     def get_currency(self, i):
-        country = self._get_dynamic_element_attribute('econ_table_row_currency_by_index', 'title', i)
+        country = self._get_dynamic_element_attribute(
+            'econ_table_row_currency_by_index', 'title', i)
 
         return self.convert_country_to_currency(country)
 
@@ -540,14 +568,13 @@ class EconomicCalendar(PageObject):
         assert self._wait_for_element_visible('time_frame_this_weeks_btn_toggled') is True, \
             'Expected This weeks time frame button to be selected but was not'
 
-        header= self.get_calendar_table_header()
+        header = self.get_calendar_table_header()
         self.logger.debug(f"\n\ntest header-> {header}")
 
-        rows= self.get_calendar_table_rows()
+        rows = self.get_calendar_table_rows()
         self.logger.debug(f"\n\ntest rows -> {rows}")
 
         assert 1 == 0
-
 
         this_weeks_caldenar = {
             "header": self.get_calendar_table_header(),
@@ -559,15 +586,14 @@ class EconomicCalendar(PageObject):
         assert 1 == 0
 
     def get_calendar_table_rows(self):
-        dates= self.get_calendar_table_date()
+        dates = self.get_calendar_table_date()
         self.logger.debug(f"\n\ntest date-> {dates}")
 
         date_ids = self.get_calendar_table_date_ids()
         self.logger.debug(f"\n\ntest date_ids-> {date_ids}")
 
-
         time_events = {}
-        i=0
+        i = 0
         # for id in date_ids:
         for date in dates:
             self.logger.debug(f"\n\ntest this loop date -> {date}")
@@ -578,16 +604,16 @@ class EconomicCalendar(PageObject):
             self.logger.debug(f"\n\ntest date_events1-> {date_events}")
 
             time_events.update({
-                    # 'date': date,
-                    # 'event_rows': date_events
+                # 'date': date,
+                # 'event_rows': date_events
 
-                f'event_{i}':{
+                f'event_{i}': {
                     'date': date,
                     'event_rows': date_events
                 }
             })
 
-            i+=1
+            i += 1
 
             self.logger.debug(f"\n\ntest time_events in loop-> {time_events}")
             # assert 1 == 0
@@ -597,8 +623,10 @@ class EconomicCalendar(PageObject):
     def set_time(self, timezone):
         self._click_element('economic_calendar_curr_time_dropdown_chevron')
 
-        self._wait_for_dynamic_element_visible('economic_calendar_curr_time_timezone_menu', timezone)
-        self._click_dynamic_element('economic_calendar_curr_time_timezone_menu', timezone)
+        self._wait_for_dynamic_element_visible(
+            'economic_calendar_curr_time_timezone_menu', timezone)
+        self._click_dynamic_element(
+            'economic_calendar_curr_time_timezone_menu', timezone)
 
         self.wait_for_econ_cal_spinner_invisible()
 
@@ -623,14 +651,13 @@ class EconomicCalendar(PageObject):
         assert self._wait_for_element_visible('time_frame_this_weeks_btn_toggled') is True, \
             'Expected This weeks time frame button to be selected but was not'
 
-        header= self.get_calendar_table_header()
+        header = self.get_calendar_table_header()
         self.logger.debug(f"\n\ntest header-> {header}")
 
-        rows= self.get_calendar_table_rows()
+        rows = self.get_calendar_table_rows()
         self.logger.debug(f"\n\ntest rows -> {rows}")
 
         assert 1 == 0
-
 
         this_weeks_caldenar = {
             "header": self.get_calendar_table_header(),

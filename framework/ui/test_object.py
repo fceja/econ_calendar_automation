@@ -32,7 +32,7 @@ class TestObject(object):
     def setup_method(self):
         self.config = ConfigParser()
 
-        self.logger = Logger(self.config).get_logger()
+        self.logger = Logger().get_logger()
 
         # Controller setup
         self.init_driver()
@@ -60,34 +60,31 @@ class TestObject(object):
         Initialize a driver instance and set the appropriate desired capabilities
 
         """
-        remote_server_url = self.configuration['remoteServerUrl']
-
+        # retreive webdriver re
+        remote_command_executor_url = self.config['webDriver']['remoteCommandExecutorUrl']
         desired_capabilities = self.configure_desired_capabilities()
 
         self.driver = webdriver.Remote(
-            command_executor=remote_server_url,
+            command_executor=remote_command_executor_url,
             desired_capabilities=desired_capabilities
         )
 
-        self.wait_time = int(self.configuration['webdriverImplicitWait'])
-        self.max_wait_time = int(self.configuration['maximumWaitTime'])
+        self.wait_time = int(self.config['webDriver']['webdriverImplicitWait'])
+        self.max_wait_time = int(self.config['webDriver']['maximumWaitTime'])
         self.driver.implicitly_wait(self.wait_time)
-        self.driver.set_window_size(self.configuration['screenResolution'].split('x')[0], self.configuration['screenResolution'].split('x')[1])
-
+        self.driver.set_window_size(self.config['webDriver']['screenResolution'].split(
+            'x')[0], self.config['webDriver']['screenResolution'].split('x')[1])
 
     def configure_desired_capabilities(self):
-        configurations = {}
+        configs = {}
 
-        configurations['automationName'] = self.configuration['automationName']
-        configurations['browserName'] = self.configuration['browserName']
-        configurations['version'] = self.configuration['browserVersion']
-        configurations['platform'] = self.configuration['platformName']
-        configurations['name'] = self.configuration['testName']
-        configurations['sauce:options'] = self.configuration['options']
-        configurations['pageLoadStrategy'] = self.configuration['pageLoadStrategy']
-        configurations['chromeOptions'] = self.configuration['chromeOptions']
+        configs['browserName'] = self.config['webDriver']['browserName']
+        configs['version'] = self.config['webDriver']['browserVersion']
+        configs['chromeOptions'] = self.config['webDriver']['chromeOptions']
+        configs['sauce:options'] = self.config['webDriver']['options']
+        configs['pageLoadStrategy'] = self.config['webDriver']['pageLoadStrategy']
 
-        return configurations
+        return configs
 
     def teardown_method(self):
         self.logger.debug('driver.quit')

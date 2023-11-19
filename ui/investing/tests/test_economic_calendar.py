@@ -1,10 +1,5 @@
 #!/usr/bin/python
 
-import csv
-import os
-
-import datetime
-
 from framework.ui.test_object import TestObject
 
 from ui.investing.page_objects.modals.calendar_date_selection_modal import CalendarDateSelectionModal
@@ -40,7 +35,7 @@ class TestEconomicCalendar(TestObject):
         config.read('configurations/config_secrets.ini')
 
         # login
-        url = self.configuration['serverUrl'] + '/login'
+        url = self.config["testProperties"]["serverUrl"] + '/login'
         self.driver.get(url)
         self.login.sign_in(
             email=config.get('secrets', 'EMAIL'),
@@ -48,7 +43,7 @@ class TestEconomicCalendar(TestObject):
         )
 
         # navigate to econ calendar
-        url = self.configuration['serverUrl'] + '/economic-calendar/'
+        url = self.config["testProperties"]['serverUrl'] + '/economic-calendar/'
         self.driver.get(url)
 
         # update country filter

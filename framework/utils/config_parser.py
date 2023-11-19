@@ -18,8 +18,6 @@ class ConfigParser(object):
         if not config_path:
             config_path = os.getenv(self.CONFIG_PATH_ENV_VAR)
 
-        print(f'file_path entered : {config_path}')
-
         self.validate_config_path_exists(config_path)
         self.parse_config_file(config_path)
 

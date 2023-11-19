@@ -1,8 +1,9 @@
 import logging
 import logging.handlers
-
 import os
 from pathlib import Path
+
+from framework.utils.config_parser import ConfigParser
 
 loggers = {}
 
@@ -12,14 +13,13 @@ class Logger(object):
     Initiate logger Instance
     """
 
-    def __init__(self, config):
-        self.config = config
+    def __init__(self):
+        self.config = ConfigParser()
 
     def get_logger(self):
         # check if logs already exist, else create
         log_name = self.config['logger']['logName'];
         if loggers.get(log_name):
-
             return loggers.get(log_name)
         else:
             __file_dir = os.path.join(os.path.split(os.path.abspath(__file__))[0])

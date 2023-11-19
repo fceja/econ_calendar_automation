@@ -1,21 +1,18 @@
 #!/usr/bin/python
 
 import inspect
-
-from selenium.common.exceptions import TimeoutException, NoSuchElementException
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.support.ui import Select
-from selenium.webdriver.common.keys import Keys
-
+import json
 import os
 import time
-import json
+from selenium.common.exceptions import TimeoutException, NoSuchElementException
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import Select
+from selenium.webdriver.support.ui import WebDriverWait
 
 from framework.utils.logger import Logger
 from framework.utils.config_parser import ConfigParser
-# from framework.utils.utils import Utils
 
 
 class PageObject(object):
@@ -28,7 +25,7 @@ class PageObject(object):
     wait_time = None
     max_wait_time = None
 
-    configuration = None
+    config = None
 
     width = None
     height = None
@@ -56,8 +53,8 @@ class PageObject(object):
         self.width = screen_size['width']
         self.height = screen_size['height']
 
-        self.wait_time = int(self.configuration['webdriverImplicitWait'])
-        self.max_wait_time = int(self.configuration['maximumWaitTime'])
+        self.wait_time = int(self.config['webDriver']['webdriverImplicitWait'])
+        self.max_wait_time = int(self.config['webDriver']['maximumWaitTime'])
 
         # self.utils = Utils()
 
