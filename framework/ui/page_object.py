@@ -20,13 +20,6 @@ class PageObject(object):
     The base class for all mobile automation page objects
 
     """
-    locator_json = None
-    driver = None
-    wait_time = None
-    max_wait_time = None
-
-    config = None
-
     def __init__(self, webdriver):
         """
         Contains WebDriver page interactions.
