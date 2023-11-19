@@ -1,0 +1,21 @@
+{
+  "logger": {
+    "logLevel": "debug",
+    "logName": "investing_log"
+  },
+  "testProperties": {
+    "serverUrl": "https://www.investing.com"
+  },
+  "webDriver": {
+    "browserName": "chrome",
+    "browserVersion": "latest",
+    "chromeOptions": {
+      "args": []
+    },
+    "maximumWaitTime": "10",
+    "pageLoadStrategy": "eager",
+    "remoteCommandExecutorUrl": "http://localhost:4444/wd/hub",
+    "screenResolution": "1200x1000",
+    "webdriverImplicitWait": "5"
+  }
+}
