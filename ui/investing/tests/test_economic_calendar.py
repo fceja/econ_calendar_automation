@@ -14,21 +14,16 @@ class TestEconomicCalendar(TestObject):
     """
     __test__ = True
 
-    """
-    NOTE - don't care about:
-    NZD - GlobalDairyTrade Price Index
-    """
-
     def test_get_economic_calendar(self):
         """
         ui/investing/tests/test_economic_calendar.py::TestEconomicCalendar::test_get_economic_calendar
         """
         # init
-        self.login = Login(self.driver)
-        self.econ_cal = EconomicCalendar(self.driver)
-        self.date_select_modal = CalendarDateSelectionModal(self.driver)
+        self.login = Login(self.webdriver)
+        self.econ_cal = EconomicCalendar(self.webdriver)
+        self.date_select_modal = CalendarDateSelectionModal(self.webdriver)
         self.filter_country_select_modal = FilterCountrySelectionModal(
-            self.driver)
+            self.webdriver)
 
         import configparser
         config = configparser.ConfigParser()
@@ -36,7 +31,7 @@ class TestEconomicCalendar(TestObject):
 
         # login
         url = self.config["testProperties"]["serverUrl"] + '/login'
-        self.driver.get(url)
+        self.webdriver.get(url)
         self.login.sign_in(
             email=config.get('secrets', 'EMAIL'),
             password=config.get('secrets', 'PASSWORD')
@@ -44,7 +39,7 @@ class TestEconomicCalendar(TestObject):
 
         # navigate to econ calendar
         url = self.config["testProperties"]['serverUrl'] + '/economic-calendar/'
-        self.driver.get(url)
+        self.webdriver.get(url)
 
         # update country filter
         self.filter_country_select_modal.click_btn_filter_country()
@@ -70,7 +65,7 @@ class TestEconomicCalendar(TestObject):
 
         self.econ_cal.click_btn_icon_calendar()
 
-        start_date_str = '12/01/2022'
+        start_date_str = '12/15/2022'
         today_date_str = '12/16/2022'
 
         self.date_select_modal.set_calendar_date(

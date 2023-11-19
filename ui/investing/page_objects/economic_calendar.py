@@ -325,16 +325,16 @@ class EconomicCalendar(PageObject):
         return events
 
     def scroll_to_first_row(self):
-        self.scroll_element_into_view('econ_table_first_row')
+        self._scroll_element_into_view('econ_table_first_row')
         self._wait_for_element_visible('econ_table_first_row')
 
     def scroll_to_last_row(self):
         get_last_elem = None
         new_last_elem = None
         while True:
-            self.scroll_element_into_view('econ_table_last_row')
+            self._scroll_element_into_view('econ_table_last_row')
             self.wait_for_econ_cal_spinner_invisible()
-            self.scroll_element_into_view('econ_table_last_row')
+            self._scroll_element_into_view('econ_table_last_row')
             assert self._wait_for_element_visible('econ_table_last_row')
 
             if get_last_elem is None:

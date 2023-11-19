@@ -17,8 +17,8 @@ class TestObject(object):
     configuration = None
     logger = None
 
-    driver = None
-    session_id = None
+    webdriver = None
+    webdriver_session_id = None
     device_data = None
 
     request = None
@@ -34,28 +34,19 @@ class TestObject(object):
 
         self.logger = Logger().get_logger()
 
-        # Controller setup
-        self.init_driver()
+        # initialize webdriver
+        self.init_webdriver()
 
-        # Session info
-        self.session_id = self.driver.session_id
-
-        # Session Timestamp
+        # webdriver session timestamp
         date = datetime.datetime.now()
         timestamp = date - datetime.timedelta(microseconds=date.microsecond)
+        session_info = f'WebDriver session id - {str(self.webdriver.session_id)} - {timestamp}'
 
-        session_info = '\nSESSION_ID[{0}]: {1}'.format(timestamp, str(self.session_id))
-
-        # Log Start
-        log = '\n' + \
-              '-'*80 + '\n' + \
-              'START TEST:\n' + \
-              '-'*80 + '\n' + session_info + '\n'
+        # log start
+        log = f'{"-"*80}\nSTART:\n{session_info}\n'
         self.logger.info(log)
 
-        # self.utils = Utils()
-
-    def init_driver(self):
+    def init_webdriver(self):
         """
         Initialize a driver instance and set the appropriate desired capabilities
 
@@ -64,15 +55,15 @@ class TestObject(object):
         remote_command_executor_url = self.config['webDriver']['remoteCommandExecutorUrl']
         desired_capabilities = self.configure_desired_capabilities()
 
-        self.driver = webdriver.Remote(
+        self.webdriver = webdriver.Remote(
             command_executor=remote_command_executor_url,
             desired_capabilities=desired_capabilities
         )
 
         self.wait_time = int(self.config['webDriver']['webdriverImplicitWait'])
         self.max_wait_time = int(self.config['webDriver']['maximumWaitTime'])
-        self.driver.implicitly_wait(self.wait_time)
-        self.driver.set_window_size(self.config['webDriver']['screenResolution'].split(
+        self.webdriver.implicitly_wait(self.wait_time)
+        self.webdriver.set_window_size(self.config['webDriver']['screenResolution'].split(
             'x')[0], self.config['webDriver']['screenResolution'].split('x')[1])
 
     def configure_desired_capabilities(self):
@@ -87,14 +78,12 @@ class TestObject(object):
         return configs
 
     def teardown_method(self):
-        self.logger.debug('driver.quit')
-        # Log Exit
-        log = '\n' + \
-              '-' * 80 + '\n' + \
-              'END TEST: ' + '\n' + \
-              '-' * 80 + '\n'
+        # log end
+        self.logger.debug('webdriver.quit')
+        log = f'END\n{"-"*80}\n'
         self.logger.info(log)
+
         try:
-            self.driver.quit()
+            self.webdriver.quit()
         except Exception as e:
             self.logger.debug('Quit Error: ' + str(e))
