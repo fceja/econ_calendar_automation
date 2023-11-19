@@ -1,14 +1,14 @@
 {
     "btn_sign_in":{
-        "by": "xpath",
+        "locator_type": "xpath",
         "locator": "//a[@class='newButton orange' and contains(text(), 'Sign In')]"
     },
     "input_email": {
-        "by": "xpath", 
+        "locator_type": "xpath",
         "locator": "//input[@id='loginFormUser_email']"
     },
     "input_password":{
-        "by": "xpath",
+        "locator_type": "xpath",
         "locator": "//input[@id='loginForm_password']"
     }
 }

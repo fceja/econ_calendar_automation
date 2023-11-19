@@ -1,18 +1,18 @@
 {
     "btn_apply": {
-        "by": "xpath", 
+        "locator_type": "xpath",
         "locator": "//a[@id='applyBtn']"
     },
     "input_start_date": {
-        "by": "xpath",
+        "locator_type": "xpath",
         "locator": "//input[@id='startDate']"
     },
     "input_end_date": {
-        "by": "xpath",
+        "locator_type": "xpath",
         "locator": "//input[@id='endDate']"
     },
     "ui-datepicker": {
-        "by": "xpath",
+        "locator_type": "xpath",
         "locator": "//div[@id='ui-datepicker-div']"
     }
 }

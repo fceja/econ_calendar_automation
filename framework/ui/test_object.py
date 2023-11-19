@@ -10,7 +10,14 @@ from framework.utils.config_parser import ConfigParser
 
 class TestObject(object):
     """
-    This is a generic Test Object to handle setup and teardown
+    Test Object that handles setup and teardown
+
+    Helpful Reading:
+        - https://www.selenium.dev/documentation/webdriver/
+        - https://www.selenium.dev/documentation/webdriver/browsers/
+        - https://www.selenium.dev/documentation/webdriver/waits/
+        - https://www.selenium.dev/documentation/webdriver/drivers/
+        - https://www.selenium.dev/documentation/webdriver/drivers/remote_webdriver/
 
     """
     def setup_method(self):

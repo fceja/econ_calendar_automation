@@ -17,21 +17,30 @@ from framework.utils.config_parser import ConfigParser
 
 class PageObject(object):
     """
-    The base class for all mobile automation page objects
+    Base class for automation page objects.
+    Contains WebDriver page interactions.
+
+    Helpful Reading:
+        - https://selenium-python.readthedocs.io/api.html
+        - https://www.selenium.dev/documentation/webdriver/
+        - https://www.selenium.dev/documentation/webdriver/elements/
+        - https://www.selenium.dev/documentation/webdriver/elements/locators/
+        - https://www.selenium.dev/documentation/webdriver/elements/finders/
+        - https://www.selenium.dev/documentation/webdriver/elements/interactions/
+        - https://www.selenium.dev/documentation/webdriver/elements/information/
+        - https://www.selenium.dev/documentation/webdriver/interactions/
 
     """
     def __init__(self, webdriver):
         """
-        Contains WebDriver page interactions.
         :param webdriver: WebDriver instance
-
         """
         self.logger = Logger().get_logger()
 
         self.load_json_locator_data()
         self.config = ConfigParser()
 
-        # Controller setup
+        # webdriver setup
         self.driver = webdriver
 
         self.wait_time = int(self.config['webDriver']['webdriverImplicitWait'])
@@ -50,7 +59,6 @@ class PageObject(object):
             with open(json_locator_file_path) as json_file:
                 self.locator_json = json.load(json_file)
 
-    @staticmethod
     def _pause(wait=0):
         """
         :param wait: time to wait.
@@ -172,12 +180,11 @@ class PageObject(object):
         """
         key_pair_value = self.locator_json[json_key]
 
-        by_value = key_pair_value['by']
+        locator_type = key_pair_value['locator_type']
         locator_value = key_pair_value['locator']
-        self.logger.debug("by: {by} locator: {locator}".format(
-            by=by_value, locator=locator_value)
-        )
-        return by_value, locator_value
+        self.logger.debug(f"locator_type: {locator_type} locator: {locator_value}")
+
+        return locator_type, locator_value
 
     def _get_dynamic_locator(self, json_key, *args):
         """
@@ -190,12 +197,12 @@ class PageObject(object):
         """
         key_pair_value = self.locator_json[json_key]
 
-        by_value = key_pair_value['by']
+        locator_type = key_pair_value['locator_type']
         locator_value = key_pair_value['locator'].format(*args)
-        self.logger.debug("by: {by} locator: {locator}".format(
-            by=by_value, locator=locator_value)
-        )
-        return by_value, locator_value
+
+        self.logger.debug(f"locator_type: {locator_type} locator: {locator_value}")
+
+        return locator_type, locator_value
 
     def _get_element_text(self, json_key):
         """
