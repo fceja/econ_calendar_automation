@@ -1,7 +1,6 @@
 #!/usr/bin/python
 
 import datetime
-
 from appium import webdriver
 
 from framework.utils.logger import Logger

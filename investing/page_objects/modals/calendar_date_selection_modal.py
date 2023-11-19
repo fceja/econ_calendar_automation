@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import datetime
 
 from framework.ui.page_object import PageObject
@@ -5,7 +7,7 @@ from framework.ui.page_object import PageObject
 class CalendarDateSelectionModal(PageObject):
     """
     This class contains interactions for calendar date selection modal
-    on /economic-calendar pageobject 
+    on /economic-calendar pageobject
     """
 
     # region clickers
@@ -34,7 +36,7 @@ class CalendarDateSelectionModal(PageObject):
         """
         self.set_start_date(start_date)
         self.set_end_date(end_date)
-        
+
         self.click_btn_apply()
     # endregion Setters
 

@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 from framework.ui.page_object import PageObject
 
 class FilterCountrySelectionModal(PageObject):

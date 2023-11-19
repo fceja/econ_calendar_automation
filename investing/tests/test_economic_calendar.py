@@ -1,11 +1,10 @@
 #!/usr/bin/python
 
 from framework.ui.test_object import TestObject
-
-from ui.investing.page_objects.modals.calendar_date_selection_modal import CalendarDateSelectionModal
-from ui.investing.page_objects.modals.filter_country_selection_modal import FilterCountrySelectionModal
-from ui.investing.page_objects.economic_calendar import EconomicCalendar
-from ui.investing.page_objects.login import Login
+from investing.page_objects.modals.calendar_date_selection_modal import CalendarDateSelectionModal
+from investing.page_objects.modals.filter_country_selection_modal import FilterCountrySelectionModal
+from investing.page_objects.economic_calendar import EconomicCalendar
+from investing.page_objects.login import Login
 
 
 class TestEconomicCalendar(TestObject):

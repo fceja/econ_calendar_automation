@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import logging
 import logging.handlers
 import os
@@ -5,9 +7,8 @@ from pathlib import Path
 
 from framework.utils.config_parser import ConfigParser
 
+
 loggers = {}
-
-
 class Logger(object):
     """
     Initiate logger Instance

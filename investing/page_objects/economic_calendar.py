@@ -1,9 +1,8 @@
+#!/usr/bin/python
 
 import os
 import csv
-
-from datetime import datetime, timezone
-
+from datetime import datetime
 from framework.ui.page_object import PageObject
 
 
