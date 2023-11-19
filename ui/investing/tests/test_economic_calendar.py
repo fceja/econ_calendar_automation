@@ -12,8 +12,6 @@ class TestEconomicCalendar(TestObject):
     """
     This class contains tests for Economic Calendar page
     """
-    __test__ = True
-
     def test_get_economic_calendar(self):
         """
         ui/investing/tests/test_economic_calendar.py::TestEconomicCalendar::test_get_economic_calendar
@@ -25,17 +23,21 @@ class TestEconomicCalendar(TestObject):
         self.filter_country_select_modal = FilterCountrySelectionModal(
             self.webdriver)
 
-        import configparser
-        config = configparser.ConfigParser()
-        config.read('configurations/config_secrets.ini')
+        # define test props
+        countries = {
+            "Canada": "CAD",
+            "USA": "USD"
+        }
+        email = self.config['testProperties']['investingAccountEmail']
+        password = self.config['testProperties']['investingAccountPassowrd']
+
+        calendar_start_date_str = '10/17/2023'
+        calendar_today_date_str = '10/21/2023'
 
         # login
         url = self.config["testProperties"]["serverUrl"] + '/login'
         self.webdriver.get(url)
-        self.login.sign_in(
-            email=config.get('secrets', 'EMAIL'),
-            password=config.get('secrets', 'PASSWORD')
-        )
+        self.login.sign_in(email = email, password = password)
 
         # navigate to econ calendar
         url = self.config["testProperties"]['serverUrl'] + '/economic-calendar/'
@@ -46,18 +48,6 @@ class TestEconomicCalendar(TestObject):
         self.filter_country_select_modal.wait_for_container_countries()
         self.filter_country_select_modal.click_btn_clear_selections()
 
-        # countries = ['USA']
-        countries = {
-            "Australia": "AUD",
-            "Canada": "CAD",
-            "Europe": "EUR",
-            "Germany": "EUR/GER",
-            "Japan": "JPY",
-            "New_Zealand": "NZD",
-            "Switzerland": "CHF",
-            "UK": "GBP",
-            "USA": "USD"
-        }
         for country in countries.keys():
             self.filter_country_select_modal.click_btn_country_selection(
                 country)
@@ -65,15 +55,12 @@ class TestEconomicCalendar(TestObject):
 
         self.econ_cal.click_btn_icon_calendar()
 
-        start_date_str = '12/15/2022'
-        today_date_str = '12/16/2022'
-
         self.date_select_modal.set_calendar_date(
-            start_date=start_date_str, end_date=today_date_str)
+            start_date=calendar_start_date_str, end_date=calendar_today_date_str)
         self.econ_cal.wait_for_econ_cal_spinner_invisible()
 
         self.econ_cal.scroll_to_last_row()
         self.econ_cal.scroll_to_first_row()
 
         self.econ_cal.table_data_to_csv(
-            countries, start_date_str, today_date_str)
+            countries, calendar_start_date_str, calendar_today_date_str)

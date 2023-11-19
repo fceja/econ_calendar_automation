@@ -4,7 +4,9 @@
     "logName": "investing_log"
   },
   "testProperties": {
-    "serverUrl": "https://www.investing.com"
+    "serverUrl": "https://www.investing.com",
+    "investingAccountEmail": "",
+    "investingAccountPassowrd": ""
   },
   "webDriver": {
     "browserName": "chrome",
