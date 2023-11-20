@@ -1,0 +1,10 @@
+# files
+**/.DS_Store
+**/.pytest_cache
+**/.ipynb_checkpoints
+**/__pycache__
+
+# dirs
+**/logs
+**/venv
+**/output
