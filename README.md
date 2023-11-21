@@ -1,4 +1,4 @@
-# fx_inv
+# Econ Calendar Automation
 
 # Sample - Command-line Pytest Invocation
 
