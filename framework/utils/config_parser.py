@@ -42,11 +42,11 @@ class ConfigParser(object):
         """
         if not config_path:
             raise IOError(
-                f"'CONFIG_FILE_PATH' not provided in command-line pytest invocation.")
+                f"'CONFIG_PATH' not provided in command-line pytest invocation.")
 
         if not os.path.exists(config_path):
             raise IOError(
-                f"Provided 'CONFIG_FILE_PATH' does not exist -> [{config_path}]")
+                f"Provided 'CONFIG_PATH' does not exist -> [{config_path}]")
 
     def parse_config_file(self, config_path):
         with open(config_path, 'r+') as json_file:
