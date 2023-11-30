@@ -34,6 +34,11 @@
     -  Run, ```java -jar selenium-server-4.1.0.jar standalone -p 4444```
         - This initiates selenium server on port 4444
    
+12. Create a free account from investing.com
+    - include the credentials in ```/configs/local_config.json```
+        - In the json file, replace the empty strings:
+            - testProperties['investingAccountEmail']               
+            - testProperties['investingAccountPassword']               
   
 ## Sample - Command-line Pytest Invocation
 -```CONFIG_PATH={path_to_project}/econ_calendar_automation/configs/local_config.json python3 -m "pytest" -s -v --disable-warnings "investing/tests/test_economic_calendar.py" ```
