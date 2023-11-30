@@ -1,5 +1,5 @@
 ## Description
-Uses Selenium Webdriver and Pytest to parse economic calendar data from investing.com. </br>
+Uses Selenium Webdriver and Pytest to parse economic calendar data from [investing.com](https://www.investing.com/economic-calendar/). </br>
 Also outputs the data into a csv.
 
 ## Installation
