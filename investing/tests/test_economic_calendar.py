@@ -11,6 +11,7 @@ class TestEconomicCalendar(TestObject):
     """
     This class contains tests for Economic Calendar page
     """
+
     def test_get_economic_calendar(self):
         """
         ui/investing/tests/test_economic_calendar.py::TestEconomicCalendar::test_get_economic_calendar
@@ -24,22 +25,23 @@ class TestEconomicCalendar(TestObject):
 
         # define test props
         countries = {
-            "Canada": "CAD",
+            "Europe": "EUR",
             "USA": "USD"
         }
         email = self.config['testProperties']['investingAccountEmail']
         password = self.config['testProperties']['investingAccountPassowrd']
 
-        calendar_start_date_str = '10/17/2023'
-        calendar_today_date_str = '10/21/2023'
+        calendar_start_date_str = '11/10/2023'
+        calendar_today_date_str = '11/27/2023'
 
         # login
         url = self.config["testProperties"]["serverUrl"] + '/login'
         self.webdriver.get(url)
-        self.login.sign_in(email = email, password = password)
+        self.login.sign_in(email=email, password=password)
 
         # navigate to econ calendar
-        url = self.config["testProperties"]['serverUrl'] + '/economic-calendar/'
+        url = self.config["testProperties"]['serverUrl'] + \
+            '/economic-calendar/'
         self.webdriver.get(url)
 
         # update country filter
