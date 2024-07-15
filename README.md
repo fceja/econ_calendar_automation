@@ -65,9 +65,9 @@ Also outputs the data into a csv.
     - ```
       CONFIG_PATH={path_to_project}/econ_calendar_automation/configs/local_config.json python -m "pytest" -s -v --disable-warnings "investing/tests/test_economic_calendar.py"
       ```
-  - make sure to replace ```{path_to_project}``` with actual project path
-  - you'll see a csv created after running test -> ```/output/{date}/output.csv```
-  - dates are configurable on lines 34 and 35 in -> ```/investing/tests/test_economic_calender.py```
+  - Make sure to replace ```{path_to_project}``` with actual project path
+  - You'll see a csv created after running test -> ```/output/{date}/output.csv```
+  - Dates are configurable on lines 34 and 35 in -> ```/investing/tests/test_economic_calender.py```
     
 ### Tools & Platforms
 <p>
